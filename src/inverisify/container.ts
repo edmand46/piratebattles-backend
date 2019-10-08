@@ -8,6 +8,7 @@ import { SessionsManager } from "../modules/sessions/manager";
 import { SessionsService } from "../modules/sessions/service";
 import { ShipsManager } from "../modules/ships/manager";
 import { ShipsService } from "../modules/ships/service";
+import { SessionsController } from "../modules/sessions/controller";
 
 const appContainer = new Container();
 appContainer.bind<AccountsService>(TYPES.AccountsService).to(AccountsService);
@@ -19,6 +20,7 @@ appContainer.bind<UsersController>(TYPES.UsersController).to(UsersController);
 
 appContainer.bind<SessionsManager>(TYPES.SessionsManager).to(SessionsManager);
 appContainer.bind<SessionsService>(TYPES.SessionsService).to(SessionsService);
+appContainer.bind<SessionsController>(TYPES.SessionsController).to(SessionsController);
 
 appContainer.bind<ShipsManager>(TYPES.ShipsManager).to(ShipsManager);
 appContainer.bind<ShipsService>(TYPES.ShipsService).to(ShipsService);

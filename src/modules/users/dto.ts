@@ -14,17 +14,6 @@ export const UpdateUserDTOSchema = {
   tags,
 }
 
-export class LoginUserDTO {
-  deviceId: string;
-}
-
-export const LoginUserDTOSchema = {
-  body: {
-    deviceId: { type: 'string' }
-  },
-  tags,
-};
-
 
 export const wrapAccount = ({ accountId, type }: Account) => ({
   accountId,

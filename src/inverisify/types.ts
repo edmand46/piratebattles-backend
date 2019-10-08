@@ -3,6 +3,7 @@ export const TYPES = {
 
   SessionsService: Symbol.for('sessionsService'),
   SessionsManager: Symbol.for('sessionsManager'),
+  SessionsController: Symbol.for('sessionsController'),
 
   ShipsService: Symbol.for('shipsService'),
   ShipsManager: Symbol.for('shipsManager'),

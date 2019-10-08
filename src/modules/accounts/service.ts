@@ -6,6 +6,7 @@ const ACCOUNTS = 'accounts';
 
 @injectable()
 export class AccountsService {
+
   async linkAccountByDeviceId(userId: number, deviceId: string): Promise<Account> {
     const acc: Account = { type: TypeAccount.DEVICE_ID, data: { deviceId }, userId };
     const [accountId] = await database(ACCOUNTS).insert(acc).returning('accountId');
