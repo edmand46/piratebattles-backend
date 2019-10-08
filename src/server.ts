@@ -49,7 +49,9 @@ export function createHTTPServer() {
   });
 
   fastify.addHook('onResponse', (req, reply, next) => {
-    console.log(`[${req.raw.method}<${req.ip}>] ${req.raw.url} - ${JSON.stringify(req.body)} - ${reply.res.statusCode}|${reply.res.statusMessage}`);
+    // @ts-ignore
+    const time = new Date().getTime() - req.startTime;
+    console.log(`[${req.raw.method}<${req.ip}>] ${req.raw.url} - ${time}ms - ${JSON.stringify(req.body)} - ${reply.res.statusCode}|${reply.res.statusMessage}`);
     next()
   });
 
