@@ -1,4 +1,6 @@
 import { inject, injectable } from "inversify";
+import { TYPES } from "../../inverisify/types";
+import { ShipsService } from "./service";
 
 
 @injectable()

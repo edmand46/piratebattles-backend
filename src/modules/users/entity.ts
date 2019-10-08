@@ -4,6 +4,5 @@ export class User {
   passwordHash: string;
   level: number;
   xp: number;
-  isBanned: boolean;
   accounts?: Account[];
 }

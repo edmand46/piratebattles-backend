@@ -31,12 +31,10 @@ export const wrapAccount = ({ accountId, type }: Account) => ({
   type
 });
 
-export const wrapUser = ({ name, passwordHash, level, xp, isBanned, userId }: User, accounts: Account[]) => ({
+export const wrapUser = ({ name, level, xp, userId }: User, accounts: Account[]) => ({
   userId,
   level,
   xp,
   name,
-  passwordHash,
-  isBanned,
   accounts: accounts.map(wrapAccount)
 });

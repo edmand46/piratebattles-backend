@@ -21,7 +21,6 @@ export class UsersManager {
     }
 
     const userData: User = {
-      isBanned: false,
       level: 1,
       xp: 0,
       name: 'User',

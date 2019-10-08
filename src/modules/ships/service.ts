@@ -5,7 +5,7 @@ const SHIPS = 'ships';
 const USER_SHIPS = 'user_ships';
 
 @injectable()
-export class ShisService {
+export class ShipsService {
   async createShip(): Promise<Ship> {
     return;
   }
