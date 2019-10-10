@@ -19,7 +19,7 @@ export class ShipsService {
   }
 
   getShip(shipId: number): Promise<Ship> {
-    return database(SHIPS).where(shipId).first();
+    return database(SHIPS).where({ shipId}).first();
   }
 
   async getShipsOfUser(userId: number): Promise<UserShip[]> {

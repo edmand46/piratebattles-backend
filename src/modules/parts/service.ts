@@ -14,7 +14,7 @@ export class PartsService {
 
   async givePartsToUser(userId: number, partsIds: number[]): Promise<void> {
     const parts: Part[] = await database(PARTS).whereIn('partId', partsIds);
-    const userParts: UserPart[] = parts.map(({ partId, type }) => ({ count: 0, level: 1, parentPartId: partId, type, userId }));
+    const userParts: UserPart[] = parts.map(({ partId }) => ({ count: 0, level: 1, parentPartId: partId, userId }));
     return database(USER_PARTS).insert(userParts)
   }
 }

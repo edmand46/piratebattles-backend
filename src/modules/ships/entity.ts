@@ -13,6 +13,7 @@ export class Ship extends BaseShipParams {
 
 export class UserShip extends BaseShipParams {
   userShipId?: number;
+  userId: number;
   parentShipId: number;
   createdAt?: Date;
 }

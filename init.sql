@@ -93,10 +93,3 @@ INSERT INTO public.parts ("partId", "shipId", type, resource, "createdAt")
 VALUES (3, 1, 'body', 'body1', '2019-10-09 08:01:22.080930');
 INSERT INTO public.parts ("partId", "shipId", type, resource, "createdAt")
 VALUES (4, 1, 'gun', 'gun2', '2019-10-09 08:01:22.080930');
-
-INSERT INTO public.user_parts ("userPartId", "parentPartId", "userId", level, count) values (1, 1, 1, 1, 0);
-INSERT INTO public.user_parts ("userPartId", "parentPartId", "userId", level, count) values (2, 2, 1, 1, 0);
-INSERT INTO public.user_parts ("userPartId", "parentPartId", "userId", level, count) values (3, 3, 1, 1, 0);
-INSERT INTO public.user_parts ("userPartId", "parentPartId", "userId", level, count) values (4, 4, 1, 1, 0);
-
-INSERT INTO public.user_ships ("parentShipId", "userId", name, "bodyId", "sailId", "gunId") VALUES (1, 1, 'Мой стартовый корабль', 3, 2, 4);
