@@ -20,6 +20,8 @@ export const wrapAccount = ({ accountId, type }: Account) => ({
   type
 });
 
+export type WrappedUser = ReturnType<typeof wrapUser>;
+
 export const wrapUser = ({ name, level, xp, userId }: User, accounts: Account[]) => ({
   userId,
   level,

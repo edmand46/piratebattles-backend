@@ -1,11 +1,9 @@
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../inverisify/types";
-import { wrapUser } from "./dto";
+import { WrappedUser, wrapUser } from "./dto";
 import { AccountsService } from "../accounts/service";
 import { UsersService } from "./service";
 import { User } from "./entity";
-
-type WrappedUser = ReturnType<typeof wrapUser>;
 
 @injectable()
 export class UsersManager {

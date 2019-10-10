@@ -55,13 +55,14 @@ CREATE TABLE "ships" (
 );
 
 CREATE TABLE "user_ships" (
-  "shipId"     SERIAL            NOT NULL,
-  "userShipId" integer           NOT NULL,
-  "name"       character varying not null,
-  "bodyId"     integer           not null,
-  "sailId"     integer           not null,
-  "gunId"      integer           not null,
-  "createdAt"  timestamp with time zone default now()
+  "userShipId"   SERIAL            NOT NULL,
+  "parentShipId" integer           NOT NULL,
+  "userId"       integer           NOT NULL,
+  "name"         character varying not null,
+  "bodyId"       integer           not null,
+  "sailId"       integer           not null,
+  "gunId"        integer           not null,
+  "createdAt"    timestamp with time zone default now()
 );
 
 create table "parts" (
@@ -73,9 +74,24 @@ create table "parts" (
 );
 
 create table "user_parts" (
-  "userPartId" serial  not null,
-  "partId"     integer not null,
-  "level"      integer not null         default 1,
-  "count"      integer not null         default 0,
-  "createdAt"  timestamp with time zone default now()
+  "userPartId"   serial  not null,
+  "parentPartId" integer not null,
+  "userId"       integer not null,
+  "level"        integer not null         default 1,
+  "count"        integer not null         default 0,
+  "createdAt"    timestamp with time zone default now()
 );
+
+INSERT INTO public.ships ("shipId", name, "bodyId", "sailId", "gunId", "createdAt") VALUES (1, 'Стартовый корабль', 3, 2, 1, '2019-10-09 08:02:03.509102');
+
+INSERT INTO public.parts ("partId", "shipId", type, resource, "createdAt") VALUES (1, 1, 'gun', 'gun1', '2019-10-09 08:00:00.502208');
+INSERT INTO public.parts ("partId", "shipId", type, resource, "createdAt") VALUES (2, 1, 'sail', 'sail1', '2019-10-09 08:01:22.080930');
+INSERT INTO public.parts ("partId", "shipId", type, resource, "createdAt") VALUES (3, 1, 'body', 'body1', '2019-10-09 08:01:22.080930');
+INSERT INTO public.parts ("partId", "shipId", type, resource, "createdAt") VALUES (4, 1, 'gun', 'gun2', '2019-10-09 08:01:22.080930');
+
+INSERT INTO public.user_parts ("userPartId", "parentPartId", "userId", level, count) values (1, 1, 1, 1, 0);
+INSERT INTO public.user_parts ("userPartId", "parentPartId", "userId", level, count) values (2, 2, 1, 1, 0);
+INSERT INTO public.user_parts ("userPartId", "parentPartId", "userId", level, count) values (3, 3, 1, 1, 0);
+INSERT INTO public.user_parts ("userPartId", "parentPartId", "userId", level, count) values (4, 4, 1, 1, 0);
+
+INSERT INTO public.user_ships ("parentShipId", "userId", name, "bodyId", "sailId", "gunId") VALUES (1, 1, 'Мой стартовый корабль', 3, 2, 4);

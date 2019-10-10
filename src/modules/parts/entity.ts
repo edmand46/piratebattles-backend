@@ -1,4 +1,4 @@
-enum PartType {
+export enum PartType {
   Sail = 'sail',
   Gun = 'gun',
   Body = 'body',

@@ -1,4 +1,7 @@
 export const TYPES = {
+  PartsService: Symbol.for('partsService'),
+  PartsManager: Symbol.for('partsManager'),
+
   AccountsService: Symbol.for('accountService'),
 
   SessionsService: Symbol.for('sessionsService'),

@@ -13,5 +13,6 @@ export class Ship extends BaseShipParams {
 }
 
 export class UserShip extends Ship {
+  name: string;
   userShipId?: number
 }
