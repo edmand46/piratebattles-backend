@@ -1,18 +1,18 @@
 export class BaseShipParams {
+  name: string;
   bodyId: number;
   sailId: number;
   gunId: number;
+  resource: string;
 }
 
 export class Ship extends BaseShipParams {
   shipId?: number;
-  bodyId: number;
-  sailId: number;
-  gunId: number;
   createdAt?: Date;
 }
 
-export class UserShip extends Ship {
-  name: string;
-  userShipId?: number
+export class UserShip extends BaseShipParams {
+  userShipId?: number;
+  parentShipId: number;
+  createdAt?: Date;
 }

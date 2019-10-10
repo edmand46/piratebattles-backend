@@ -8,7 +8,11 @@ export interface CreateSessionViaDeviceIdDTO {
 
 export const CreateSessionViaDeviceIdDTOSchema = {
   body: {
-    deviceId: { type: 'string' }
+    type: 'object',
+    properties: {
+      deviceId: { type: 'string' }
+    },
+    required: ['deviceId'],
   },
   tags,
 };

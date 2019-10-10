@@ -4,13 +4,15 @@ import { WrappedUser, wrapUser } from "./dto";
 import { AccountsService } from "../accounts/service";
 import { UsersService } from "./service";
 import { User } from "./entity";
+import { createErrorObject } from "../../utils";
+import * as errors from "../../constants";
 
 @injectable()
 export class UsersManager {
   @inject(TYPES.AccountsService) private accountsService: AccountsService;
   @inject(TYPES.UsersService) private usersService: UsersService;
 
-  async getOrCreateUserByDeviceId(deviceId: string): Promise<WrappedUser> {
+  async loginViaDeviceId(deviceId: string): Promise<WrappedUser> {
     const accounts = await this.accountsService.getAccountByDeviceId(deviceId);
     if (accounts.length > 0) {
       const [acc] = accounts;
@@ -18,12 +20,21 @@ export class UsersManager {
       return wrapUser(user, accounts);
     }
 
+    throw createErrorObject(errors.USER_NOT_FOUND);
+  }
+
+  async registerViaDeviceId(name: string, deviceId: string): Promise<WrappedUser> {
+    const accounts = await this.accountsService.getAccountByDeviceId(deviceId);
+    if (accounts.length > 0) {
+      throw createErrorObject(errors.DEVICE_ALREADY_LINKED);
+    }
+
     const userData: User = {
       level: 1,
       xp: 0,
       gold: 100,
       keys: 5,
-      name: 'User',
+      name,
       passwordHash: '',
     };
 

@@ -9,10 +9,31 @@ export class UpdateUserDTO {
 
 export const UpdateUserDTOSchema = {
   body: {
-    name: { type: 'string' }
+    type: 'object',
+    properties: {
+      name: { type: 'string' }
+    },
+    required: ['name'],
   },
   tags,
 }
+
+export interface CreateUserViaDeviceIdDTO {
+  deviceId: string;
+  name: string,
+}
+
+export const CreateUserViaDeviceIdDTOSchema = {
+  body: {
+    type: 'object',
+    properties: {
+      deviceId: { type: 'string' },
+      name: { type: 'string' },
+    },
+    required: ['deviceId', 'name'],
+  },
+  tags,
+};
 
 
 export const wrapAccount = ({ accountId, type }: Account) => ({

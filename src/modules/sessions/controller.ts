@@ -16,7 +16,7 @@ export class SessionsController {
 
   async loginViaDeviceId(req: FastifyRequest<null, null, null, null, CreateSessionViaDeviceIdDTO>, reply) {
     const { deviceId } = req.body;
-    const user = await this.usersManager.getOrCreateUserByDeviceId(deviceId);
+    const user = await this.usersManager.loginViaDeviceId(deviceId);
     const session = await this.sessionsManager.createSession(user.userId);
     const parts = await this.partsManager.getPartsForUser(user.userId);
     const ships = await this.shipsManager.getShipsForPlayer(user.userId);

@@ -51,6 +51,7 @@ CREATE TABLE "ships" (
   "bodyId"    integer           not null,
   "sailId"    integer           not null,
   "gunId"     integer           not null,
+  "resource"  character varying not null,
   "createdAt" timestamp with time zone default now()
 );
 
@@ -82,12 +83,16 @@ create table "user_parts" (
   "createdAt"    timestamp with time zone default now()
 );
 
-INSERT INTO public.ships ("shipId", name, "bodyId", "sailId", "gunId", "createdAt") VALUES (1, 'Стартовый корабль', 3, 2, 1, '2019-10-09 08:02:03.509102');
+INSERT INTO public.ships ("shipId", name, "bodyId", "sailId", "gunId", "resource", "createdAt") VALUES (1, 'Стартовый корабль', 3, 2, 1, 'ship1', '2019-10-09 08:02:03.509102');
 
-INSERT INTO public.parts ("partId", "shipId", type, resource, "createdAt") VALUES (1, 1, 'gun', 'gun1', '2019-10-09 08:00:00.502208');
-INSERT INTO public.parts ("partId", "shipId", type, resource, "createdAt") VALUES (2, 1, 'sail', 'sail1', '2019-10-09 08:01:22.080930');
-INSERT INTO public.parts ("partId", "shipId", type, resource, "createdAt") VALUES (3, 1, 'body', 'body1', '2019-10-09 08:01:22.080930');
-INSERT INTO public.parts ("partId", "shipId", type, resource, "createdAt") VALUES (4, 1, 'gun', 'gun2', '2019-10-09 08:01:22.080930');
+INSERT INTO public.parts ("partId", "shipId", type, resource, "createdAt")
+VALUES (1, 1, 'gun', 'gun1', '2019-10-09 08:00:00.502208');
+INSERT INTO public.parts ("partId", "shipId", type, resource, "createdAt")
+VALUES (2, 1, 'sail', 'sail1', '2019-10-09 08:01:22.080930');
+INSERT INTO public.parts ("partId", "shipId", type, resource, "createdAt")
+VALUES (3, 1, 'body', 'body1', '2019-10-09 08:01:22.080930');
+INSERT INTO public.parts ("partId", "shipId", type, resource, "createdAt")
+VALUES (4, 1, 'gun', 'gun2', '2019-10-09 08:01:22.080930');
 
 INSERT INTO public.user_parts ("userPartId", "parentPartId", "userId", level, count) values (1, 1, 1, 1, 0);
 INSERT INTO public.user_parts ("userPartId", "parentPartId", "userId", level, count) values (2, 2, 1, 1, 0);

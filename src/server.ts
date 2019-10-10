@@ -26,7 +26,6 @@ export function createHTTPServer() {
   fastify.register(multipart, { ...multipartConfig, onFile: saveData });
   fastify.register(routes, { prefix: '/v1' });
   fastify.register(sensible);
-  fastify.setErrorHandler(handleError);
 
   fastify.addHook('onError', (req, reply, error, next) => {
     console.log(error);
@@ -39,6 +38,7 @@ export function createHTTPServer() {
   });
 
   fastify.setErrorHandler((error: any, request, reply) => {
+    if (error.validation) return handleError(error, request, reply);
     error.errorCode ? reply.status(400).send(error) : reply.status(505).send(error);
   });
 
