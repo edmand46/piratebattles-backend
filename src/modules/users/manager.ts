@@ -6,11 +6,15 @@ import { UsersService } from "./service";
 import { User } from "./entity";
 import { createErrorObject } from "../../utils";
 import * as errors from "../../constants";
+import { ShipsManager } from "../ships/manager";
+import { PartsManager } from "../parts/manager";
 
 @injectable()
 export class UsersManager {
   @inject(TYPES.AccountsService) private accountsService: AccountsService;
   @inject(TYPES.UsersService) private usersService: UsersService;
+  @inject(TYPES.ShipsManager) private shipsManager: ShipsManager;
+  @inject(TYPES.PartsManager) private partsManager: PartsManager;
 
   async loginViaDeviceId(deviceId: string): Promise<WrappedUser> {
     const accounts = await this.accountsService.getAccountByDeviceId(deviceId);
@@ -29,6 +33,7 @@ export class UsersManager {
       throw createErrorObject(errors.DEVICE_ALREADY_LINKED);
     }
 
+    const starterShipId = 1;
     const userData: User = {
       level: 1,
       xp: 0,
@@ -40,6 +45,8 @@ export class UsersManager {
 
     const user = await this.usersService.createUser(userData);
     const account = await this.accountsService.linkAccountByDeviceId(user.userId, deviceId);
+
+    await this.shipsManager.giveShipUser(user.userId, starterShipId);
 
     return wrapUser(user, [account]);
   }

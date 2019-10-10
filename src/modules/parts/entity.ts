@@ -14,7 +14,8 @@ export class Part {
 
 export class UserPart {
   userPartId?: number;
-  partId: number;
+  parentPartId: number;
+  userId: number;
   level: number;
   count: number;
   createdAt?: Date;

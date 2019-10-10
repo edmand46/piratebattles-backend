@@ -13,4 +13,8 @@ export class PartsManager {
     const userParts = await this.partsService.getUserParts(userId);
     return userParts.map((p) => wrapUserPart(p));
   }
+
+  async givePartsToUser(userId: number, parts: number[]): Promise<void> {
+    return this.partsService.givePartsToUser(userId, parts);
+  }
 }

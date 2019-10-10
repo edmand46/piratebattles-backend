@@ -3,7 +3,7 @@ export class BaseShipParams {
   bodyId: number;
   sailId: number;
   gunId: number;
-  resource: string;
+  resource?: string;
 }
 
 export class Ship extends BaseShipParams {

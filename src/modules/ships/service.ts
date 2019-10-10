@@ -14,12 +14,12 @@ export class ShipsService {
     return;
   }
 
-  getShip() {
-
+  createUserShip(userShip: UserShip): Promise<void> {
+    return database(USER_SHIPS).insert(userShip);
   }
 
-  addShipToUser() {
-
+  getShip(shipId: number): Promise<Ship> {
+    return database(SHIPS).where(shipId).first();
   }
 
   async getShipsOfUser(userId: number): Promise<UserShip[]> {
