@@ -1,8 +1,9 @@
 import { inject, injectable } from "inversify";
 import { TYPES } from "../../inverisify/types";
 import { ShipsService } from "./service";
-import { UserShip } from "./entity";
+import { Ship, UserShip } from "./entity";
 import { PartsManager } from "../parts/manager";
+import { WrappedShip, wrapShip, wrapUserShip } from "./dto";
 
 @injectable()
 export class ShipsManager {
@@ -12,14 +13,19 @@ export class ShipsManager {
   async giveShipUser(userId: number, catalogShipId: number): Promise<void> {
     const { shipId, bodyId, gunId, sailId, name } = await this.shipsService.getShip(catalogShipId);
     const userShip: UserShip = { parentShipId: shipId, sailId, gunId, name, bodyId, userId };
-    console.log(userShip);
     await Promise.all([
       this.shipsService.createUserShip(userShip),
       this.partsManager.givePartsToUser(userId, [bodyId, gunId, sailId]),
     ]).catch(console.error);
   }
 
+  async getShips(): Promise<WrappedShip[]> {
+    const ships = await this.shipsService.getShips();
+    return ships.map(s => wrapShip(s));
+  }
+
   async getShipsForPlayer(userId: number) {
-    return this.shipsService.getShipsOfUser(userId);
+    const ships = await this.shipsService.getShipsOfUser(userId);
+    return ships.map(s => wrapUserShip(s));
   }
 }

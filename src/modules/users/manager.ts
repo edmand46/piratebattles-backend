@@ -8,6 +8,7 @@ import { createErrorObject } from "../../utils";
 import * as errors from "../../constants";
 import { ShipsManager } from "../ships/manager";
 import { PartsManager } from "../parts/manager";
+import tableLevels from './data/levels';
 
 @injectable()
 export class UsersManager {
@@ -49,5 +50,24 @@ export class UsersManager {
     await this.shipsManager.giveShipUser(user.userId, starterShipId);
 
     return wrapUser(user, [account]);
+  }
+
+  async addValue(user: User, additionalXP = 0, additionalGold = 0, additionalKeys = 0) : Promise<User> {
+    const { userId, xp, keys, gold, level } = user;
+    const nextLevelXP = tableLevels[level];
+    const resultKeys = keys + additionalKeys;
+    const resultGold = gold + additionalGold;
+    let resultXp = xp + additionalXP;
+    let resultLevel = level;
+    if (resultXp >=  nextLevelXP) {
+      resultLevel += 1;
+      resultXp = 0;
+    }
+    return this.usersService.updateUserById(userId, {
+      xp: resultXp,
+      gold: resultGold,
+      keys: resultKeys,
+      level: resultLevel
+    })
   }
 }

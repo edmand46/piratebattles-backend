@@ -11,10 +11,15 @@ import { ShipsService } from "../modules/ships/service";
 import { SessionsController } from "../modules/sessions/controller";
 import { PartsService } from "../modules/parts/service";
 import { PartsManager } from "../modules/parts/manager";
+import { BattlesController } from "../modules/battles/controller";
+import { BattlesManager } from "../modules/battles/manager";
 
 const appContainer = new Container();
 appContainer.bind<PartsService>(TYPES.PartsService).to(PartsService);
 appContainer.bind<PartsManager>(TYPES.PartsManager).to(PartsManager);
+
+appContainer.bind<BattlesController>(TYPES.BattlesController).to(BattlesController);
+appContainer.bind<BattlesManager>(TYPES.BattlesManager).to(BattlesManager);
 
 appContainer.bind<AccountsService>(TYPES.AccountsService).to(AccountsService);
 // appContainer.bind<AccountMana>(TYPES.AccountsService).to(AccountsService);

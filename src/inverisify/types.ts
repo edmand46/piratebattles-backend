@@ -1,6 +1,11 @@
+import { BattlesController } from "../modules/battles/controller";
+
 export const TYPES = {
   PartsService: Symbol.for('partsService'),
   PartsManager: Symbol.for('partsManager'),
+
+  BattlesManager: Symbol.for('battlesManager'),
+  BattlesController: Symbol.for('battleController'),
 
   AccountsService: Symbol.for('accountService'),
 

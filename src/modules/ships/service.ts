@@ -22,6 +22,10 @@ export class ShipsService {
     return database(SHIPS).where({ shipId}).first();
   }
 
+  getShips(): Promise<Ship[]> {
+    return database(SHIPS).where({});
+  }
+
   async getShipsOfUser(userId: number): Promise<UserShip[]> {
     const { rows } = await database.raw(`select public.user_ships.*, public.ships.resource from user_ships left join ships on user_ships."parentShipId" = "shipId" where "userId" = ?;`, [userId])
     return rows;

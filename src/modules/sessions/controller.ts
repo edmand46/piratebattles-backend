@@ -6,6 +6,7 @@ import { FastifyRequest } from "fastify";
 import { CreateSessionViaDeviceIdDTO } from "./dto";
 import { ShipsManager } from "../ships/manager";
 import { PartsManager } from "../parts/manager";
+import { checkSignature, getSignature } from "../../lib/sodium";
 
 @injectable()
 export class SessionsController {

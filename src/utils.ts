@@ -1,8 +1,36 @@
-const fs = require('fs-extra');
-const bcrypt = require('bcrypt');
-const requestRaw = require('request');
-const path = require('path');
-const sharp = require('sharp');
+import { ajvMapErrors } from "./constants";
+import bcrypt from 'bcrypt';
+import requestRaw from 'request';
+import * as path from 'path';
+import sharp from 'sharp';
+import * as fs from 'fs-extra';
+import * as crypto from 'crypto';
+
+export function getSignature(input: string): string {
+  const hmac = crypto.createHmac('sha256', process.env.SECRET_KEY);
+  hmac.update(input);
+  return hmac.digest('hex');
+}
+
+export function checkSignature(input: string, signature: string): boolean {
+  return getSignature(input) === signature;
+}
+
+export function handleError(error, req, reply) {
+  const { validation } = error;
+  if (validation) {
+    const errors = validation.map(v => {
+      const { params: { missingProperty }, keyword } = v;
+      const errorConstant = ajvMapErrors[keyword];
+      return [missingProperty, errorConstant];
+    });
+
+    return reply.status(400).send({
+      errors,
+    });
+  }
+  reply.send(error);
+};
 
 export const btoa = str => Buffer.from(str).toString('base64');
 export const isProduction = () => process.env.ENVIRONMENT === 'prod';

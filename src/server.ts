@@ -13,8 +13,7 @@ import staticConfig from './config/static';
 import serverConfig from './config/server';
 
 import { routes } from './routes';
-import { handleError } from './modules/errors/controller';
-import { saveData } from './utils';
+import { checkSignature, createErrorObject, handleError, saveData } from './utils';
 import { Sentry } from './lib/sentry';
 
 export function createHTTPServer() {
@@ -29,11 +28,6 @@ export function createHTTPServer() {
 
   fastify.addHook('onError', (req, reply, error, next) => {
     console.log(error);
-
-    Sentry.withScope(scope => {
-      scope.addEventProcessor(event => Sentry.Handlers.parseRequest(event, req));
-      Sentry.captureException(error);
-    });
     next();
   });
 
@@ -48,14 +42,29 @@ export function createHTTPServer() {
     next();
   });
 
+  fastify.addHook('preHandler', (req, reply, done) => {
+    if (!('x-signature' in req.headers)) {
+      reply.status(200).send(createErrorObject('none'));
+      return;
+    }
+
+    const signature = req.headers['x-signature'];
+    const input = JSON.stringify(req.body);
+    const valid = checkSignature(input, signature);
+    if (!valid) {
+      reply.status(200).send(createErrorObject('none'));
+      return;
+    }
+
+    done();
+  });
+
   fastify.addHook('onResponse', (req, reply, next) => {
     // @ts-ignore
     const time = new Date().getTime() - req.startTime;
     console.log(`[${req.raw.method}<${req.ip}>] ${req.raw.url} - ${time}ms - ${JSON.stringify(req.body)} - ${reply.res.statusCode}|${reply.res.statusMessage}`);
     next()
   });
-
-  fastify.printRoutes();
 
   return fastify;
 }
