@@ -3,8 +3,8 @@ import { TYPES } from "../../inverisify/types";
 import { FastifyRequest } from "fastify";
 import { UsersManager } from "./manager";
 import { SessionsManager } from "../sessions/manager";
-import { CreateSessionViaDeviceIdDTO } from "../sessions/dto";
-import { CreateUserViaDeviceIdDTO, wrapProfile } from "./dto";
+import { } from "../sessions/dto";
+import { LoginViaDeviceIdDTO, RegisterViaDeviceIdDTO, wrapProfile } from "./dto";
 import { ShipsManager } from "../ships/manager";
 import { PartsManager } from "../parts/manager";
 import { User } from "./entity";
@@ -28,14 +28,14 @@ export class UsersController {
     return wrapProfile(user, session, ships, parts, chests)
   }
 
-  async registerViaDeviceId(req: FastifyRequest<null, null, null, null, CreateUserViaDeviceIdDTO>, reply) {
+  async registerViaDeviceId(req: FastifyRequest<null, null, null, null, RegisterViaDeviceIdDTO>, reply) {
     const { deviceId, name } = req.body;
     const user = await this.usersManager.registerViaDeviceId(name, deviceId);
     const profile = await this.retrieveProfileData(user);
     reply.send(profile);
   }
 
-  async loginViaDeviceId(req: FastifyRequest<null, null, null, null, CreateSessionViaDeviceIdDTO>, reply) {
+  async loginViaDeviceId(req: FastifyRequest<null, null, null, null, LoginViaDeviceIdDTO>, reply) {
     const { deviceId } = req.body;
     const user = await this.usersManager.loginViaDeviceId(deviceId);
     const profile = await this.retrieveProfileData(user);

@@ -27,12 +27,12 @@ export const UpdateUserDTOSchema = {
   tags,
 }
 
-export interface CreateUserViaDeviceIdDTO {
+export interface RegisterViaDeviceIdDTO {
   deviceId: string;
   name: string,
 }
 
-export const CreateUserViaDeviceIdDTOSchema = {
+export const RegisterViaDeviceIdDTOSchema = {
   body: {
     type: 'object',
     properties: {
@@ -43,6 +43,23 @@ export const CreateUserViaDeviceIdDTOSchema = {
   },
   tags,
 };
+
+export interface LoginViaDeviceIdDTO {
+  deviceId: string;
+}
+
+export const LoginViaDeviceIdDTOSchema = {
+  body: {
+    type: 'object',
+    properties: {
+      deviceId: { type: 'string' }
+    },
+    required: ['deviceId'],
+  },
+  tags,
+};
+
+
 
 
 
