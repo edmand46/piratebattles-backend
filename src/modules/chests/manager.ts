@@ -10,7 +10,8 @@ export class ChestsManager {
   @inject(TYPES.ChestsService) private chestsService: ChestsService;
 
   async getUserChests(userId: number): Promise<UserChest[]> {
-    return this.chestsService.
+    // return this.chestsService
+    return [];
   }
 
   addChestForUser(user: User, chestId: number) {
