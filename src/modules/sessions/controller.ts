@@ -6,6 +6,7 @@ import { FastifyRequest } from "fastify";
 import { CreateSessionViaDeviceIdDTO } from "./dto";
 import { ShipsManager } from "../ships/manager";
 import { PartsManager } from "../parts/manager";
+import { wrapProfile } from "../users/dto";
 
 @injectable()
 export class SessionsController {
@@ -20,7 +21,8 @@ export class SessionsController {
     const session = await this.sessionsManager.createSession(user.userId);
     const parts = await this.partsManager.getPartsForUser(user.userId);
     const ships = await this.shipsManager.getShipsForPlayer(user.userId);
-    reply.send({ user, session, ships, parts });
+    const wrappedProfile = wrapProfile(user, session, ships, parts);
+    reply.send(wrappedProfile);
   }
 }
 

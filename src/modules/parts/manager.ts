@@ -9,9 +9,8 @@ import { PartsService } from "./service";
 export class PartsManager {
   @inject(TYPES.PartsService) private partsService : PartsService;
 
-  async getPartsForUser(userId: number) : Promise<WrappedUserPart[]> {
-    const userParts = await this.partsService.getUserParts(userId);
-    return userParts.map((p) => wrapUserPart(p));
+  async getPartsForUser(userId: number) {
+    return this.partsService.getUserParts(userId);
   }
 
   async givePartsToUser(userId: number, parts: number[]): Promise<void> {

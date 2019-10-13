@@ -25,7 +25,6 @@ export class ShipsManager {
   }
 
   async getShipsForPlayer(userId: number) {
-    const ships = await this.shipsService.getShipsOfUser(userId);
-    return ships.map(s => wrapUserShip(s));
+    return await this.shipsService.getShipsOfUser(userId);
   }
 }

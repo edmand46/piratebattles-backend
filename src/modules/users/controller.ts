@@ -4,7 +4,7 @@ import { FastifyRequest } from "fastify";
 import { UsersManager } from "./manager";
 import { SessionsManager } from "../sessions/manager";
 import { CreateSessionViaDeviceIdDTO } from "../sessions/dto";
-import { CreateUserViaDeviceIdDTO } from "./dto";
+import { CreateUserViaDeviceIdDTO, wrapProfile } from "./dto";
 import { ShipsManager } from "../ships/manager";
 import { PartsManager } from "../parts/manager";
 
@@ -21,7 +21,8 @@ export class UsersController {
     const session = await this.sessionsManager.createSession(user.userId);
     const parts = await this.partsManager.getPartsForUser(user.userId);
     const ships = await this.shipsManager.getShipsForPlayer(user.userId);
-    reply.send({ user, session, ships, parts });
+    const wrappedProfile = wrapProfile(user, session, ships, parts);
+    reply.send(wrappedProfile);
   }
 }
 

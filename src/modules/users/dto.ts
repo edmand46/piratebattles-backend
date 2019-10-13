@@ -1,5 +1,12 @@
 import { Account } from "../accounts/entity";
 import { User } from "./entity";
+import { Session } from "../sessions/entity";
+import { UserShip } from "../ships/entity";
+import { UserPart } from "../parts/entity";
+import { wrapAccount } from "../accounts/dto";
+import { wrapSession } from "../sessions/dto";
+import { wrapUserShip } from "../ships/dto";
+import { wrapUserPart } from "../parts/dto";
 
 const tags = ['users'];
 
@@ -36,14 +43,15 @@ export const CreateUserViaDeviceIdDTOSchema = {
 };
 
 
-export const wrapAccount = ({ accountId, type }: Account) => ({
-  accountId,
-  type
+
+export const wrapProfile = (user: User, session: Session, ships: UserShip[], parts: UserPart[]) => ({
+  user: wrapUser(user),
+  session: wrapSession(session),
+  ships: ships.map(wrapUserShip),
+  parts: parts.map(wrapUserPart),
 });
 
-export type WrappedUser = ReturnType<typeof wrapUser>;
-
-export const wrapUser = ({ name, level, xp, userId }: User, accounts: Account[]) => ({
+export const wrapUser = ({ name, level, xp, userId, accounts }: User) => ({
   userId,
   level,
   xp,
