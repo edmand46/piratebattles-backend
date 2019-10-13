@@ -7,6 +7,8 @@ import { wrapAccount } from "../accounts/dto";
 import { wrapSession } from "../sessions/dto";
 import { wrapUserShip } from "../ships/dto";
 import { wrapUserPart } from "../parts/dto";
+import { UserChest } from "../chests/entity";
+import { wrapUserChest } from "../chests/dto";
 
 const tags = ['users'];
 
@@ -44,17 +46,20 @@ export const CreateUserViaDeviceIdDTOSchema = {
 
 
 
-export const wrapProfile = (user: User, session: Session, ships: UserShip[], parts: UserPart[]) => ({
+export const wrapProfile = (user: User, session: Session, ships: UserShip[], parts: UserPart[], chests: UserChest[]) => ({
   user: wrapUser(user),
   session: wrapSession(session),
   ships: ships.map(wrapUserShip),
   parts: parts.map(wrapUserPart),
+  chests: chests.map(wrapUserChest),
 });
 
-export const wrapUser = ({ name, level, xp, userId, accounts }: User) => ({
+export const wrapUser = ({ name, level, xp, userId, accounts, gold, keys }: User) => ({
   userId,
   level,
   xp,
   name,
+  gold,
+  keys,
   accounts: accounts.map(wrapAccount)
 });

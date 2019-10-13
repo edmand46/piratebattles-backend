@@ -1,19 +1,23 @@
+
 export enum ChestState {
   OPENED = 'opened',
   CLOSED = 'closed',
-  OPENING = 'opening'
+  OPENING = 'opening',
 }
 
-export class Chest {
-  chestId?: number;
+export class BaseParamsChest {
   name: string;
   timeToOpen: number;
   openImmedatlyPrice: number;
   resource: string;
+}
+
+export class Chest extends BaseParamsChest {
+  chestId?: number;
   createdAt: Date;
 }
 
-export class UserChest {
+export class UserChest extends BaseParamsChest {
   userChestId?: number;
   parentChestId: number;
   state: ChestState;
