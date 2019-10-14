@@ -9,6 +9,7 @@ import { wrapUserShip } from "../ships/dto";
 import { wrapUserPart } from "../parts/dto";
 import { UserChest } from "../chests/entity";
 import { wrapUserChest } from "../chests/dto";
+import levels from "./data/levels";
 
 const tags = ['users'];
 
@@ -74,7 +75,7 @@ export const wrapProfile = (user: User, session: Session, ships: UserShip[], par
 export const wrapUser = ({ name, level, xp, userId, accounts, gold, keys }: User) => ({
   userId,
   level,
-  xp,
+  xp: Math.round(xp * 100 / levels[level]),
   name,
   gold,
   keys,

@@ -4,6 +4,8 @@ import { TYPES } from "../../inverisify/types";
 import { wrapSession } from "./dto";
 import { UsersManager } from "../users/manager";
 import { Session } from "./entity";
+import { v4 as uuidV4 } from 'uuid';
+import * as moment from "moment";
 
 type WrappedSession = ReturnType<typeof wrapSession>;
 
@@ -13,6 +15,8 @@ export class SessionsManager {
   @inject(TYPES.SessionsService) private sessionsService: SessionsService;
 
   async createSession(userId: number): Promise<Session> {
-    return this.sessionsService.createSession(userId);
+    const token = uuidV4();
+    const expiredAt = moment().add(24, 'hours').toDate();
+    return this.sessionsService.createSession(userId, token, expiredAt);
   }
 }

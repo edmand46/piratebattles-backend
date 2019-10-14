@@ -10,9 +10,9 @@ export class BattlesManager {
 
   async saveBattleForUser(user: User, battleData: SaveBattleDTO): Promise<BattleRewardData> {
     const { level } = user;
-    const { Duration } = battleData;
+    const { Duration, DamageDone } = battleData;
 
-    const addedXp = Duration / level;
+    const addedXp = DamageDone;
     const updatedUser = await this.usersManager.addValue(user, addedXp);
     const levelUp = updatedUser.level - level > 0;
 
