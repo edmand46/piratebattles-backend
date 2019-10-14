@@ -8,9 +8,9 @@ import { TYPES } from "../../inverisify/types";
 @injectable()
 export class BattlesController {
   @inject(TYPES.BattlesManager) battlesManager: BattlesManager;
-  saveBattle(req: AuthorizedRequest<SaveBattleDTO>, reply) {
+  async saveBattle(req: AuthorizedRequest<SaveBattleDTO>, reply) {
     const battleData = req.body;
-    const reward = this.battlesManager.saveBattleForUser(req.user, battleData);
+    const reward = await this.battlesManager.saveBattleForUser(req.user, battleData);
     reply.send(reward);
   }
 }
