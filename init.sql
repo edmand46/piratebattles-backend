@@ -21,7 +21,7 @@ CREATE TABLE "accounts" (
 CREATE TABLE "users" (
   "userId"       SERIAL            NOT NULL,
   "name"         character varying NOT NULL,
-  "role "         character varying NOT NULL,
+  "role"         character varying NOT NULL,
   "passwordHash" character varying NOT NULL,
   "gold"         integer           NOT NULL,
   "keys"         integer           NOT NULL,
