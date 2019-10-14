@@ -21,7 +21,7 @@ export class UserChest extends BaseParamsChest {
   userChestId?: number;
   parentChestId: number;
   state: ChestState;
-  startOpenedAt: Date;
+  startOpeningAt: Date;
   createdAt: Date;
 }
 

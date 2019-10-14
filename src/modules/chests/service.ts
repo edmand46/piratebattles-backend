@@ -10,7 +10,8 @@ const USER_CHESTS = 'user_chests';
 
 @injectable()
 export class ChestsService {
-  getUserChests(userId: number): Promise<UserChest[]> {
-    return database(USER_CHESTS).where({ userId });
+  async getUserChests(userId: number): Promise<UserChest[]> {
+    // const { rows } = database.raw(``, []);
+    return [];
   }
 }

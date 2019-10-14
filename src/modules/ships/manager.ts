@@ -4,6 +4,7 @@ import { ShipsService } from "./service";
 import { Ship, UserShip } from "./entity";
 import { PartsManager } from "../parts/manager";
 import { WrappedShip, wrapShip, wrapUserShip } from "./dto";
+import { UserPart } from "../parts/entity";
 
 @injectable()
 export class ShipsManager {
@@ -12,11 +13,16 @@ export class ShipsManager {
 
   async giveShipUser(userId: number, catalogShipId: number): Promise<void> {
     const { shipId, bodyId, gunId, sailId, name } = await this.shipsService.getShip(catalogShipId);
-    const userShip: UserShip = { parentShipId: shipId, sailId, gunId, name, bodyId, userId };
-    await Promise.all([
-      this.shipsService.createUserShip(userShip),
-      this.partsManager.givePartsToUser(userId, [bodyId, gunId, sailId]),
-    ]).catch(console.error);
+    const [userBodyId, userGunId, sailGunId] = await this.partsManager.givePartsToUser(userId, [bodyId, gunId, sailId]);
+    const userShip: UserShip = {
+      name,
+      userId,
+      parentShipId: shipId,
+      sailId: sailGunId,
+      gunId: userGunId,
+      bodyId: userBodyId
+    };
+    await this.shipsService.createUserShip(userShip);
   }
 
   async getShips(): Promise<WrappedShip[]> {

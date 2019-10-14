@@ -86,11 +86,9 @@ create table "user_parts" (
 
 INSERT INTO public.ships ("shipId", name, "bodyId", "sailId", "gunId", "resource", "createdAt") VALUES (1, 'Стартовый корабль', 3, 2, 1, 'ship1', '2019-10-09 08:02:03.509102');
 
-INSERT INTO public.parts ("partId", "shipId", type, resource, "createdAt")
-VALUES (1, 1, 'gun', 'gun1', '2019-10-09 08:00:00.502208');
-INSERT INTO public.parts ("partId", "shipId", type, resource, "createdAt")
-VALUES (2, 1, 'sail', 'sail1', '2019-10-09 08:01:22.080930');
-INSERT INTO public.parts ("partId", "shipId", type, resource, "createdAt")
-VALUES (3, 1, 'body', 'body1', '2019-10-09 08:01:22.080930');
-INSERT INTO public.parts ("partId", "shipId", type, resource, "createdAt")
-VALUES (4, 1, 'gun', 'gun2', '2019-10-09 08:01:22.080930');
+INSERT INTO public.parts ("partId", "shipId", type, resource, "createdAt") VALUES (1, 1, 'gun', 'gun1', '2019-10-09 08:00:00.502208');
+INSERT INTO public.parts ("partId", "shipId", type, resource, "createdAt") VALUES (2, 1, 'sail', 'sail1', '2019-10-09 08:01:22.080930');
+INSERT INTO public.parts ("partId", "shipId", type, resource, "createdAt") VALUES (3, 1, 'body', 'body1', '2019-10-09 08:01:22.080930');
+INSERT INTO public.parts ("partId", "shipId", type, resource, "createdAt") VALUES (4, 1, 'gun', 'gun2', '2019-10-09 08:01:22.080930');
+
+
