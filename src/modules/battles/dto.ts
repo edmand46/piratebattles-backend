@@ -18,14 +18,14 @@ export const SaveBattleDTOSchema = {
   body: {
     type: 'object',
     properties: {
-      Shoots: { type: 'integer' },
-      Hits: { type: 'integer' },
-      HitsReceived: { type: 'integer' },
-      DamageDone: { type: 'integer' },
-      DamageReceived: { type: 'integer' },
-      StartTime: { type: 'integer' },
-      EndTime: { type: 'integer' },
-      Duration: { type: 'integer' },
+      Shoots: { type: 'number' },
+      Hits: { type: 'number' },
+      HitsReceived: { type: 'number' },
+      DamageDone: { type: 'number' },
+      DamageReceived: { type: 'number' },
+      StartTime: { type: 'number' },
+      EndTime: { type: 'number' },
+      Duration: { type: 'number' },
     }
   },
   tags
