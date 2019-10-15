@@ -11,7 +11,7 @@ const USER_CHESTS = 'user_chests';
 
 @injectable()
 export class ChestsService {
-  async getUserChests(userId: number): Promise<UserChest[]> {
+  async getUserChestsByUserId(userId: number): Promise<UserChest[]> {
     const { rows } = await database.raw(`
     select
       user_chests.*,
@@ -22,8 +22,21 @@ export class ChestsService {
       [userId]);
     return rows;
   }
+
+  async getUserChestsById(userChestId: number): Promise<UserChest[]> {
+    const { rows } = await database.raw(`
+    select
+      user_chests.*,
+      chests.resource,
+      chests."openImmediatlyPrice",
+      chests."timeToOpen"
+    from user_chests left join chests on "chestId" = "parentChestId"  where "userChestId" = ? and state <> 'opened';`,
+      [userChestId]);
+    return rows;
+  }
+
   async getUserChest(userId: number, userChestId: number) {
-    const userChests = await this.getUserChests(userId);
+    const userChests = await this.getUserChestsByUserId(userId);
     return userChests.find(c => c.userChestId === userChestId)
   }
 
@@ -31,8 +44,10 @@ export class ChestsService {
     return database(CHESTS_LOOT).where({ chestId });
   }
 
-  async updateUserChestState(userChestId: number, state: ChestState): Promise<void> {
-    return database(USER_CHESTS).where({ userChestId }).update({ state });
+  async updateUserChestState(userChestId: number, state: ChestState): Promise<UserChest> {
+    await database(USER_CHESTS).where({ userChestId }).update({ state });
+    const [chest] = await this.getUserChestsById(userChestId);
+    return chest;
   }
 
   async getIDBUserChest(userChestId: number): Promise<IDBUserChest> {
