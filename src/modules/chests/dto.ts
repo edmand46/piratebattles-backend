@@ -1,4 +1,4 @@
-import { Chest, UserChest } from "./entity";
+import { Chest, Loot, UserChest } from "./entity";
 
 const tags = ['chests'];
 
@@ -18,8 +18,23 @@ export const OpenChestDTOSchema = {
 };
 
 
-export const wrapChest = (chest: Chest) => ({});
-export const wrapUserChest = (userChest: UserChest) => ({});
+export const wrapChest = ({ openImmediatlyPrice, resource, timeToOpen, chestId }: Chest) => ({
+  chestId,
+  openImmediatlyPrice,
+  resource,
+  timeToOpen
+});
+
+export const wrapUserChest = ({ openImmediatlyPrice, resource, startOpeningAt, state, timeToOpen, userChestId }: UserChest) => ({
+  userChestId,
+  openImmediatlyPrice,
+  resource,
+  startOpeningAt,
+  state,
+  timeToOpen,
+});
+
+export const wrapLoot = ({ count, crystals, gold, partId }: Loot) => ({ count, crystals, gold, partId });
 
 export type WrappedChest = ReturnType<typeof wrapChest>;
 export type WrappedUserChest = ReturnType<typeof wrapUserChest>;

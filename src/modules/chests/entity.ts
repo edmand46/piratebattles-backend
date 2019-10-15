@@ -5,24 +5,40 @@ export enum ChestState {
   OPENING = 'opening',
 }
 
-export class BaseParamsChest {
-  name: string;
+export interface IDBChest {
   timeToOpen: number;
-  openImmedatlyPrice: number;
+  openImmediatlyPrice: number;
   resource: string;
 }
 
-export class Chest extends BaseParamsChest {
-  chestId?: number;
-  createdAt: Date;
+export interface IDBUserChest {
+  userChestId?: number;
+  parentChestId: number;
+  userId: number,
+  state?: ChestState;
+  startOpeningAt?: Date;
+  createdAt?: Date;
 }
 
-export class UserChest extends BaseParamsChest {
+export class Chest implements IDBChest {
+  chestId?: number;
+  createdAt: Date;
+  timeToOpen: number;
+  openImmediatlyPrice: number;
+  resource: string;
+}
+
+export class UserChest implements IDBChest, IDBUserChest {
   userChestId?: number;
   parentChestId: number;
   state: ChestState;
   startOpeningAt: Date;
   createdAt: Date;
+  timeToOpen: number;
+  name: string;
+  openImmediatlyPrice: number;
+  resource: string;
+  userId: number;
 }
 
 export class Loot {
@@ -31,7 +47,7 @@ export class Loot {
   dropChance: number;
   partId: string;
   gold: number;
-  keys: number;
+  crystals: number;
   count: number;
   createdAt: Date;
 }

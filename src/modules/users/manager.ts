@@ -9,6 +9,7 @@ import * as errors from "../../constants";
 import { ShipsManager } from "../ships/manager";
 import { PartsManager } from "../parts/manager";
 import tableLevels from './data/levels';
+import { ChestsManager } from "../chests/manager";
 
 @injectable()
 export class UsersManager {
@@ -16,6 +17,7 @@ export class UsersManager {
   @inject(TYPES.UsersService) private usersService: UsersService;
   @inject(TYPES.ShipsManager) private shipsManager: ShipsManager;
   @inject(TYPES.PartsManager) private partsManager: PartsManager;
+  @inject(TYPES.ChestsManager) private chestsManager: ChestsManager;
 
   async loginViaDeviceId(deviceId: string): Promise<User> {
     const accounts = await this.accountsService.getAccountByDeviceId(deviceId);
@@ -36,12 +38,13 @@ export class UsersManager {
     }
 
     const starterShipId = 1;
+    const starterChestId = 1;
     const userData: User = {
       level: 1,
       xp: 0,
       role: Role.PLAYER,
       gold: 100,
-      keys: 5,
+      crystals: 5,
       name,
       passwordHash: '',
     };
@@ -51,14 +54,15 @@ export class UsersManager {
     user.accounts = [account];
 
     await this.shipsManager.giveShipUser(user.userId, starterShipId);
+    await this.chestsManager.giveChestUser(user.userId, starterChestId);
 
     return user;
   }
 
-  async addValue(user: User, additionalXP = 0, additionalGold = 0, additionalKeys = 0): Promise<User> {
-    const { userId, xp, keys, gold, level } = user;
+  async addValue(user: User, additionalXP = 0, additionalGold = 0, additionalCrystals = 0): Promise<User> {
+    const { userId, xp, crystals, gold, level } = user;
     const nextLevelXP = tableLevels[level];
-    const resultKeys = keys + additionalKeys;
+    const resultCrystals = crystals + additionalCrystals;
     const resultGold = gold + additionalGold;
     let resultXp = xp + additionalXP;
     let resultLevel = level;
@@ -69,7 +73,7 @@ export class UsersManager {
     return this.usersService.updateUserById(userId, {
       xp: resultXp,
       gold: resultGold,
-      keys: resultKeys,
+      crystals: resultCrystals,
       level: resultLevel
     })
   }

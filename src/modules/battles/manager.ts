@@ -16,6 +16,8 @@ export class BattlesManager {
     const updatedUser = await this.usersManager.addValue(user, addedXp);
     const levelUp = updatedUser.level - level > 0;
 
+
+
     return { xp: addedXp, user: updatedUser, chest: null, levelUpReward: null };
   }
 }

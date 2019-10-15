@@ -1,6 +1,7 @@
 import { injectable } from "inversify";
 import { database } from "../../database/database";
 import { Part, UserPart } from "./entity";
+import levels from "./data/levels";
 
 const PARTS = 'parts';
 const USER_PARTS = 'user_parts';
@@ -18,7 +19,7 @@ export class PartsService {
 
   async givePartsToUser(userId: number, partsIds: number[]): Promise<number[]> {
     const parts: Part[] = await this.getParts(partsIds);
-    const userParts: UserPart[] = parts.map(({ partId }) => ({ count: 0, level: 1, parentPartId: partId, userId }));
+    const userParts: UserPart[] = parts.map(({ partId }) => ({ count: 0, level: 1, parentPartId: partId, userId, nextLevelCount: levels[1] }));
     return database(USER_PARTS).insert(userParts).returning('userPartId');
   }
 }

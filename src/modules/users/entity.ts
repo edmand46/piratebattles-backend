@@ -11,7 +11,7 @@ export class User {
   role: Role;
   passwordHash: string;
   gold: number;
-  keys: number;
+  crystals: number;
   level: number;
   xp: number;
   accounts?: Account[];

@@ -61,23 +61,20 @@ export const LoginViaDeviceIdDTOSchema = {
 };
 
 
-
-
-
 export const wrapProfile = (user: User, session: Session, ships: UserShip[], parts: UserPart[], chests: UserChest[]) => ({
   user: wrapUser(user),
   session: wrapSession(session),
-  ships: ships.map(wrapUserShip),
-  parts: parts.map(wrapUserPart),
-  chests: chests.map(wrapUserChest),
+  userShips: ships.map(wrapUserShip),
+  userParts: parts.map(wrapUserPart),
+  userChests: chests.map(wrapUserChest),
 });
 
-export const wrapUser = ({ name, level, xp, userId, accounts, gold, keys }: User) => ({
+export const wrapUser = ({ name, level, xp, userId, accounts, gold, crystals}: User) => ({
   userId,
   level,
   xp: Math.round(xp * 100 / levels[level]),
   name,
   gold,
-  keys,
+  crystals,
   accounts: accounts.map(wrapAccount)
 });

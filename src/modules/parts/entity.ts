@@ -18,5 +18,6 @@ export class UserPart {
   userId: number;
   level: number;
   count: number;
+  nextLevelCount: number;
   createdAt?: Date;
 }

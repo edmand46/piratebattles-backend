@@ -6,17 +6,15 @@ import sharp from 'sharp';
 import * as fs from 'fs-extra';
 import * as crypto from 'crypto';
 
-export function getSignature(input: string): string {
+export const getSignature = (input: string) => {
   const hmac = crypto.createHmac('sha256', process.env.SECRET_KEY);
   hmac.update(input);
   return hmac.digest('hex');
 }
 
-export function checkSignature(input: string, signature: string): boolean {
-  return getSignature(input) === signature;
-}
+export const checkSignature = (input: string, signature: string) => getSignature(input) === signature;
 
-export function handleError(error, req, reply) {
+export const handleError = (error, req, reply) => {
   const { validation } = error;
   if (validation) {
     const errors = validation.map(v => {
@@ -30,11 +28,7 @@ export function handleError(error, req, reply) {
     });
   }
   reply.send(error);
-};
-
-export const btoa = str => Buffer.from(str).toString('base64');
-export const isProduction = () => process.env.ENVIRONMENT === 'prod';
-export const toUTC = (dateStr) => new Date(Date.parse(dateStr)).toUTCString();
+}
 
 export const createErrorObject = (errorCode: string, data?: Object) => ({ errorCode, ...data });
 
