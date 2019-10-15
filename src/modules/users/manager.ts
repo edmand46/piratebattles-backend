@@ -53,8 +53,10 @@ export class UsersManager {
     const account = await this.accountsService.linkAccountByDeviceId(user.userId, deviceId);
     user.accounts = [account];
 
-    await this.shipsManager.giveShipUser(user.userId, starterShipId);
-    await this.chestsManager.giveChestUser(user.userId, starterChestId);
+    await Promise.all([
+      this.shipsManager.giveShipUser(user.userId, starterShipId),
+      this.chestsManager.giveChestUser(user.userId, starterChestId),
+    ]);
 
     return user;
   }

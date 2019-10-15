@@ -1,5 +1,5 @@
 import { injectable } from "inversify";
-import { IDBUserChest, Loot, UserChest } from "./entity";
+import { ChestState, IDBUserChest, Loot, UserChest } from "./entity";
 import { database } from "../../database/database";
 import { User } from "../users/entity";
 
@@ -18,16 +18,24 @@ export class ChestsService {
       chests.resource,
       chests."openImmediatlyPrice",
       chests."timeToOpen"
-    from user_chests left join chests on "chestId" = "parentChestId"  where "userId" = ?;`,
+    from user_chests left join chests on "chestId" = "parentChestId"  where "userId" = ? and state <> 'opened';`,
       [userId]);
     return rows;
+  }
+  async getUserChest(userId: number, userChestId: number) {
+    const userChests = await this.getUserChests(userId);
+    return userChests.find(c => c.userChestId === userChestId)
   }
 
   async getLootForChest(chestId: number): Promise<Loot[]> {
     return database(CHESTS_LOOT).where({ chestId });
   }
 
-  async getUserChest(userChestId: number): Promise<IDBUserChest> {
+  async updateUserChestState(userChestId: number, state: ChestState): Promise<void> {
+    return database(USER_CHESTS).where({ userChestId }).update({ state });
+  }
+
+  async getIDBUserChest(userChestId: number): Promise<IDBUserChest> {
     return database(USER_CHESTS).where({ userChestId }).first();
   }
 

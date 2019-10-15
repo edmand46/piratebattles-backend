@@ -10,7 +10,7 @@ export class ChestsController {
   @inject(TYPES.ChestsManager) private chestsManager: ChestsManager;
   async openChest(req: AuthorizedRequest<OpenChestDTO>, reply) {
     const { userChestId } = req.body;
-    const loot = await this.chestsManager.openChest(userChestId);
-    reply.send(wrapLoot(loot));
+    const loot = await this.chestsManager.startChestOpening(userChestId);
+    // reply.send(wrapLoot(loot));
   }
 }
