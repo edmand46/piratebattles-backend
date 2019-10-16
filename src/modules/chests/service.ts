@@ -23,8 +23,8 @@ export class ChestsService {
     return rows;
   }
 
-  async getUserChestsById(userChestId: number): Promise<UserChest[]> {
-    const { rows } = await database.raw(`
+  async getUserChestsById(userChestId: number): Promise<UserChest> {
+    const { rows: [chest] } = await database.raw(`
     select
       user_chests.*,
       chests.resource,
@@ -32,7 +32,7 @@ export class ChestsService {
       chests."timeToOpen"
     from user_chests left join chests on "chestId" = "parentChestId"  where "userChestId" = ? and state <> 'opened';`,
       [userChestId]);
-    return rows;
+    return chest;
   }
 
   async getUserChest(userId: number, userChestId: number) {
@@ -44,10 +44,9 @@ export class ChestsService {
     return database(CHESTS_LOOT).where({ chestId });
   }
 
-  async updateUserChestState(userChestId: number, state: ChestState): Promise<UserChest> {
-    await database(USER_CHESTS).where({ userChestId }).update({ state });
-    const [chest] = await this.getUserChestsById(userChestId);
-    return chest;
+  async updateUserChestState(userChestId: number, data: Partial<IDBUserChest>): Promise<UserChest> {
+    await database(USER_CHESTS).where({ userChestId }).update(data);
+    return this.getUserChestsById(userChestId);
   }
 
   async getIDBUserChest(userChestId: number): Promise<IDBUserChest> {

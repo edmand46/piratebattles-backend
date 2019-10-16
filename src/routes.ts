@@ -23,7 +23,9 @@ export function routes(fastify, opts, next) {
   fastify.post('/users/login', { schema: usersDto.LoginViaDeviceIdDTOSchema }, (req, reply) => appContainer.get<UsersController>(TYPES.UsersController).loginViaDeviceId(req, reply));
 
   fastify.post('/battles/results', { schema: battlesDto.SaveBattleDTOSchema, preHandler: [auth()] }, (req, reply) => appContainer.get<BattlesController>(TYPES.BattlesController).saveBattle(req, reply))
-  fastify.post('/chests/startingOpen', { schema: chestsDto.OpenChestDTOSchema, preHandler: [auth()] }, (req, reply) => appContainer.get<ChestsController>(TYPES.ChestsController).startOpening(req, reply));
-  fastify.post('/chests/finishOpen', { schema: chestsDto.OpenChestDTOSchema, preHandler: [auth()] }, (req, reply) => appContainer.get<ChestsController>(TYPES.ChestsController).finishOpening(req, reply));
+  fastify.post('/chests/open', { schema: chestsDto.OpenChestDTOSchema, preHandler: [auth()] }, (req, reply) => appContainer.get<ChestsController>(TYPES.ChestsController).startOpening(req, reply));
+  fastify.post('/chests/loot', { schema: chestsDto.OpenChestDTOSchema, preHandler: [auth()] }, (req, reply) => appContainer.get<ChestsController>(TYPES.ChestsController).finishOpening(req, reply));
+  // fastify.post('/chests/open_now', { schema: chestsDto.OpenChestDTOSchema, preHandler: [auth()] }, (req, reply) => appContainer.get<ChestsController>(TYPES.ChestsController).startOpening(req, reply));
+
   next();
 }

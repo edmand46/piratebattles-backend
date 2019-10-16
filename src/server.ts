@@ -43,18 +43,18 @@ export function createHTTPServer() {
   });
 
   fastify.addHook('preHandler', (req, reply, done) => {
-    if (!('x-signature' in req.headers)) {
-      reply.status(200).send(createErrorObject('none'));
-      return;
-    }
-
-    const signature = req.headers['x-signature'];
-    const input = JSON.stringify(req.body);
-    const valid = checkSignature(input, signature);
-    if (!valid) {
-      reply.status(200).send(createErrorObject('none'));
-      return;
-    }
+    // if (!('x-signature' in req.headers)) {
+    //   reply.status(200).send(createErrorObject('none'));
+    //   return;
+    // }
+    //
+    // const signature = req.headers['x-signature'];
+    // const input = JSON.stringify(req.body);
+    // const valid = checkSignature(input, signature);
+    // if (!valid) {
+    //   reply.status(200).send(createErrorObject('none'));
+    //   return;
+    // }
 
     done();
   });

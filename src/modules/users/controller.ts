@@ -3,7 +3,6 @@ import { TYPES } from "../../inverisify/types";
 import { FastifyRequest } from "fastify";
 import { UsersManager } from "./manager";
 import { SessionsManager } from "../sessions/manager";
-import { } from "../sessions/dto";
 import { LoginViaDeviceIdDTO, RegisterViaDeviceIdDTO, wrapProfile } from "./dto";
 import { ShipsManager } from "../ships/manager";
 import { PartsManager } from "../parts/manager";
