@@ -38,13 +38,20 @@ export class ChestsManager {
     });
   }
 
-  async finishOpenChest(userChestId: number): Promise<Loot> {
-    const { parentChestId, state, startOpeningAt, timeToOpen } = await this.checkUserHasChest(userChestId);
-    if (state !== ChestState.OPENING) throw createErrorObject(USER_CHEST_STATE_INVALID);
-    const time = Math.abs(moment().diff(moment(startOpeningAt)));
-    if (time < timeToOpen) throw createErrorObject(USER_CHEST_STATE_INVALID);
+  async getLoot(parentChestId: number) {
     const loot: Loot[] = await this.chestsService.getLootForChest(parentChestId);
     return loot[Math.floor(Math.random() % loot.length - 1)];
+  }
+
+  async finishOpenChest(userChestId: number, immediatly: boolean): Promise<Loot> {
+    const { parentChestId, state, startOpeningAt, timeToOpen } = await this.checkUserHasChest(userChestId);
+    if (state !== ChestState.OPENING) throw createErrorObject(USER_CHEST_STATE_INVALID);
+    if (immediatly) {
+      return this.getLoot(parentChestId);
+    }
+    const time = Math.abs(moment().diff(moment(startOpeningAt)));
+    if (time < timeToOpen) throw createErrorObject(USER_CHEST_STATE_INVALID);
+    return this.getLoot(parentChestId);
   }
 
   async giveChestUser(userId: number, chestId: number): Promise<void> {

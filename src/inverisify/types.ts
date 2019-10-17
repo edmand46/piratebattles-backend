@@ -1,3 +1,4 @@
+import { ShipsController } from "../modules/ships/controller";
 
 export const TYPES = {
   PartsService: Symbol.for('partsService'),
@@ -17,6 +18,7 @@ export const TYPES = {
 
   ShipsService: Symbol.for('shipsService'),
   ShipsManager: Symbol.for('shipsManager'),
+  ShipsController: Symbol.for('shipsController'),
 
   UsersService: Symbol.for('usersService'),
   UsersManager: Symbol.for('usersManager'),

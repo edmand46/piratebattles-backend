@@ -15,6 +15,7 @@ export class Part {
 export class UserPart {
   userPartId?: number;
   parentPartId: number;
+  type: PartType;
   userId: number;
   level: number;
   count: number;

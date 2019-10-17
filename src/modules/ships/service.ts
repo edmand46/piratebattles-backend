@@ -3,6 +3,7 @@ import { Ship, UserShip } from "./entity";
 import { database } from "../../database/database";
 import { PartsService } from "../parts/service";
 import { TYPES } from "../../inverisify/types";
+import { User } from "../users/entity";
 
 const SHIPS = 'ships';
 const USER_SHIPS = 'user_ships';
@@ -19,7 +20,7 @@ export class ShipsService {
   }
 
   getShip(shipId: number): Promise<Ship> {
-    return database(SHIPS).where({ shipId}).first();
+    return database(SHIPS).where({ shipId }).first();
   }
 
   getShips(): Promise<Ship[]> {
@@ -29,5 +30,15 @@ export class ShipsService {
   async getShipsOfUser(userId: number): Promise<UserShip[]> {
     const { rows } = await database.raw(`select public.user_ships.*, public.ships.resource from user_ships left join ships on user_ships."parentShipId" = "shipId" where "userId" = ?;`, [userId])
     return rows;
+  }
+
+  async getUserShipById(userShipId: number): Promise<UserShip> {
+    const { rows: [ship] } = await database.raw(`select public.user_ships.*, public.ships.resource from user_ships left join ships on user_ships."parentShipId" = "shipId" where "userShipId" = ?;`, [userShipId])
+    return ship;
+  }
+
+  async updateShip(userShipId: number, data: Partial<UserShip>): Promise<UserShip> {
+    await database(USER_SHIPS).where({ userShipId }).update(data);
+    return this.getUserShipById(userShipId);
   }
 }

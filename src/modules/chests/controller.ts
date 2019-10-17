@@ -16,8 +16,8 @@ export class ChestsController {
   }
 
   async finishOpening(req: AuthorizedRequest<OpenChestDTO>, reply) {
-    const { userChestId } = req.body;
-    const loot = await this.chestsManager.finishOpenChest(userChestId);
+    const { userChestId, immediatly } = req.body;
+    const loot = await this.chestsManager.finishOpenChest(userChestId, immediatly);
     reply.send(wrapLoot(loot));
   }
 }

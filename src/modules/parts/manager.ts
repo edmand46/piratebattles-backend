@@ -14,6 +14,10 @@ export class PartsManager {
     return this.partsService.getUserParts(userId);
   }
 
+  async getPartsForUserByIds(userPartIds: number[]) : Promise<UserPart[]> {
+    return this.partsService.getUserPartsByIds(userPartIds);
+  }
+
   async givePartsToUser(userId: number, parts: number[]): Promise<number[]> {
     return this.partsService.givePartsToUser(userId, parts);
   }

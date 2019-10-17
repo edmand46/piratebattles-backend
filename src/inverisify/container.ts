@@ -15,6 +15,7 @@ import { BattlesManager } from "../modules/battles/manager";
 import { ChestsManager } from "../modules/chests/manager";
 import { ChestsService } from "../modules/chests/service";
 import { ChestsController } from "../modules/chests/controller";
+import { ShipsController } from "../modules/ships/controller";
 
 const appContainer = new Container();
 
@@ -40,6 +41,7 @@ appContainer.bind<SessionsService>(TYPES.SessionsService).to(SessionsService);
 
 appContainer.bind<ShipsManager>(TYPES.ShipsManager).to(ShipsManager);
 appContainer.bind<ShipsService>(TYPES.ShipsService).to(ShipsService);
+appContainer.bind<ShipsController>(TYPES.ShipsService).to(ShipsController);
 
 
 export { appContainer };

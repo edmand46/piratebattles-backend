@@ -3,16 +3,18 @@ import { Chest, Loot, UserChest } from "./entity";
 const tags = ['chests'];
 
 export class OpenChestDTO {
-  userChestId?: number
+  userChestId?: number;
+  immediatly: boolean;
 }
 
 export const OpenChestDTOSchema = {
   body: {
     type: 'object',
     properties: {
-      userChestId: { type: 'integer' }
+      userChestId: { type: 'integer' },
+      immediatly: { type: 'boolean' }
     },
-    required: ['userChestId'],
+    required: ['userChestId', 'immediatly'],
   },
   tags,
 };
