@@ -41,7 +41,7 @@ appContainer.bind<SessionsService>(TYPES.SessionsService).to(SessionsService);
 
 appContainer.bind<ShipsManager>(TYPES.ShipsManager).to(ShipsManager);
 appContainer.bind<ShipsService>(TYPES.ShipsService).to(ShipsService);
-appContainer.bind<ShipsController>(TYPES.ShipsService).to(ShipsController);
+appContainer.bind<ShipsController>(TYPES.ShipsController).to(ShipsController);
 
 
 export { appContainer };
